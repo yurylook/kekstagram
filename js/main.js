@@ -47,17 +47,23 @@ var generatePhotos = function () {
 };
 var photos = generatePhotos();
 
-var generatePictures = function () {
-  var template = document.querySelector('#picture').content.querySelector('a');
-  var picturesElement = document.querySelector('.pictures');
-  for (var i = 0; i < photos.length; i++) {
-    var pictureElement = template.cloneNode(true);
-    pictureElement.querySelector('.picture__img').src = photos[i].url;
-    pictureElement.querySelector('.picture__likes').innerText = photos[i].likes;
-    pictureElement.querySelector('.picture__comments').innerText = photos[i].comments.length;
-    picturesElement.appendChild(pictureElement);
-  }
+var generatePictureNode = function (pictureData) {
+  var template = document
+  .querySelector('#picture')
+  .content
+  .querySelector('a');
+
+  var pictureElement = template.cloneNode(true);
+
+  pictureElement.querySelector('.picture__img').src = pictureData.url;
+  pictureElement.querySelector('.picture__likes').innerText = pictureData.likes;
+  pictureElement.querySelector('.picture__comments').innerText = pictureData.comments.length;
+
   return pictureElement;
 };
+var picturesElement = document.querySelector('.pictures');
+for (var i = 0; i < photos.length; i++) {
+  picturesElement.appendChild(generatePictureNode(photos[i])
+  );
+}
 
-generatePictures();
