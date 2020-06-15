@@ -66,4 +66,6 @@ for (var i = 0; i < photos.length; i++) {
   picturesElement.appendChild(generatePictureNode(photos[i])
   );
 }
-
+var selectFile = document.querySelector('.img-upload');
+var titleFile = selectFile.querySelector('.img-upload__title');
+titleFile.classList.remove('visually-hidden');
