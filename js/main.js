@@ -66,6 +66,25 @@ for (var i = 0; i < photos.length; i++) {
   picturesElement.appendChild(generatePictureNode(photos[i])
   );
 }
-var selectFile = document.querySelector('.img-upload');
-var titleFile = selectFile.querySelector('.img-upload__title');
-titleFile.classList.remove('visually-hidden');
+
+var popup = document.querySelector('.img-upload__overlay');
+popup.classList.remove('hidden');
+var scalaMas = popup.querySelectorAll('.scale__control');
+console.log(scalaMas);
+var smallerButton = scalaMas[0];
+// var scalaValue = scalaMas[1].value;
+var biggerButton = scalaMas[2];
+console.log(scalaMas[1].value);
+smallerButton.addEventListener('click', function () {
+  // if (scalaValue === '55%' || scalaValue === '50%') {
+  // scalaValue = '25%';
+  // } else if (scalaValue === '75%') {
+  // scalaValue = '50%';
+  // } else if (scalaValue === '100%') {
+  scalaMas[1].value = '25%';
+  // }
+
+});
+biggerButton.addEventListener('click', function () {
+  scalaMas[1].value = '75%';
+});
