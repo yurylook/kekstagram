@@ -102,7 +102,7 @@ var scaleControlValue = scaleControl[1].value;
 var buttonControlBigger = scaleControl[2];
 var value = 100;
 var scalePersentage;
-console.log (scaleControlValue);
+// console.log (scaleControlValue);
 // scaleControl[1].value.innerText = value;
 buttonControlSmaller.addEventListener('click', function () {
   if (25 < value && value <= 100) {
@@ -110,7 +110,7 @@ buttonControlSmaller.addEventListener('click', function () {
     scalePersentage = value / 100;
     imgUploadPreviewImg.style = 'transform: scale(' + scalePersentage + ');';
     scaleControlValue = value + '%';
-   console.log (scalePersentage, scaleControlValue);
+    // console.log (scalePersentage, scaleControlValue);
     scaleControlValue.innerText = value + '%';
   }
 });
@@ -126,4 +126,12 @@ buttonControlBigger.addEventListener('click', function () {
 });
 // document.querySelector('.img-upload__preview img').style = 'filter: grayscale(0.9);';
 // imgUploadPreviewImg.style = 'transform: scale(0.25);';
+var hashtag = document.querySelector('.text__hashtags');
+// console.log(hashtag.placeholder);
+hashtag.placeholder.addEventListener('invalid', function () {
+  // if (hashtag.validity.tooShort) {
+  //  hashtag.setCustomValidity('хеш-тег не может состоять только из одной решётки');
+  // }
 
+
+});
