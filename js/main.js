@@ -105,7 +105,7 @@ var scalePersentage;
 // console.log (scaleControlValue);
 // scaleControl[1].value.innerText = value;
 buttonControlSmaller.addEventListener('click', function () {
-  if (25 < value && value <= 100) {
+  if (value > 25 && value <= 100) {
     value -= 25;
     scalePersentage = value / 100;
     imgUploadPreviewImg.style = 'transform: scale(' + scalePersentage + ');';
@@ -116,7 +116,7 @@ buttonControlSmaller.addEventListener('click', function () {
 });
 // console.log(value);
 buttonControlBigger.addEventListener('click', function () {
-  if (25 <= value && value < 100) {
+  if (value >= 25 && value < 100) {
     value += 25;
     scalePersentage = value / 100;
     imgUploadPreviewImg.style = 'transform: scale(' + scalePersentage + ');';
@@ -126,12 +126,12 @@ buttonControlBigger.addEventListener('click', function () {
 });
 // document.querySelector('.img-upload__preview img').style = 'filter: grayscale(0.9);';
 // imgUploadPreviewImg.style = 'transform: scale(0.25);';
-var hashtag = document.querySelector('.text__hashtags');
+// var hashtag = document.querySelector('.text__hashtags');
 // console.log(hashtag.placeholder);
-hashtag.placeholder.addEventListener('invalid', function () {
-  // if (hashtag.validity.tooShort) {
-  //  hashtag.setCustomValidity('хеш-тег не может состоять только из одной решётки');
-  // }
+// hashtag.placeholder.addEventListener('invalid', function () {
+// if (hashtag.validity.tooShort) {
+//  hashtag.setCustomValidity('хеш-тег не может состоять только из одной решётки');
+// }
 
 
-});
+// });
