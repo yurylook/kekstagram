@@ -170,3 +170,43 @@ hashtag.addEventListener('input', function () {
   }
   hashtag.setCustomValidity('');
 });
+
+var previewImageElement = document.querySelector('.img-upload__preview img');
+var effectLevelLine = document.querySelector('.effect-level__line');
+var effects = function (persentage) {
+  document.querySelector('.img-upload__effects').addEventListener('change', function () {
+    var newEffect = document.querySelector('input[name=effect]:checked').value;
+    var newEffectClass = 'effect__preview--' + newEffect;
+    previewImageElement.className = '';
+    previewImageElement.classList.add(newEffectClass);
+    if (newEffect === 'none') {
+      previewImageElement.style = '';
+      effectLevelLine.classList.add('hidden');
+    } else {
+      effectLevelLine.classList.remove('hidden');
+      if (newEffect === 'chrome') {
+        previewImageElement.style = 'filter:grayscale(' + persentage + ');';
+      }
+      if (newEffect === 'sepia') {
+        previewImageElement.style = 'filter: sepia(' + persentage + ');';
+      }
+      if (newEffect === 'marvin') {
+        previewImageElement.style = 'filter: invert(' + persentage * 100 + '%);';
+      }
+      if (newEffect === 'phobos') {
+        previewImageElement.style = 'filter: blur(' + persentage * 3 + 'px);';
+      }
+      if (newEffect === 'heat') {
+        previewImageElement.style = 'filter: brightness(' + persentage * 3 + ');';
+      }
+    }
+    return newEffect;
+  });
+};
+var persentage = 1;
+effects(persentage);
+var effectLevelPin = document.querySelector('.effect-level__pin');
+effectLevelPin.addEventListener('mouseup', function () {
+  persentage = effectLevelPin.offsetLeft / effectLevelLine.offsetWidth;
+  effects(persentage);
+});
