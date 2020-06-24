@@ -118,30 +118,28 @@ var getFilterStyle = function (newEffect, persentage) {
   }
   if (newEffect === 'heat') {
     return 'filter: brightness(' + persentage * 3 + ');';
-  }
-  return newEffect;
+  } return newEffect;
 };
 
-// var imageSettings = {
-// scale: 100,
-// effect: 'none',
-// percentage: 1,
-// };
-var imageSettingsScale = 100;
-var imageSettingsEffect = 'none';
-var imageSettingsPersentage = 1;
-
+var imageSettings = {
+  scale: 100,
+  effect: 'none',
+  percentage: 1,
+};
 
 var applyImageSettings = function () {
-  var scalePersentage = imageSettingsScale / 100;
-  var newEffectClass = 'effect__preview--' + imageSettingsEffect;
+  var scalePersentage = imageSettings.scale / 100;
+  var newEffectClass = 'effect__preview--' + imageSettings.effect;
+
   imgUploadPreviewImg.style = 'transform: scale(' + scalePersentage + '); '
-    + getFilterStyle(imageSettingsEffect, imageSettingsPersentage);
+    + getFilterStyle(imageSettings.effect, imageSettings.percentage);
+
   imgUploadPreviewImg.className = '';
   imgUploadPreviewImg.classList.add(newEffectClass);
-  scaleControlValue.value = imageSettingsScale + '%';
 
-  if (imageSettingsEffect === 'none') {
+  scaleControlValue.value = imageSettings.scale + '%';
+
+  if (imageSettings.effect === 'none') {
     effectLevel.classList.add('hidden');
   } else {
     effectLevel.classList.remove('hidden');
@@ -152,15 +150,15 @@ applyImageSettings();
 
 
 buttonControlSmaller.addEventListener('click', function () {
-  if (imageSettingsScale > 25) {
-    imageSettingsScale -= 25;
+  if (imageSettings.scale > 25) {
+    imageSettings.scale -= 25;
     applyImageSettings();
   }
 });
 
 buttonControlBigger.addEventListener('click', function () {
-  if (imageSettingsScale < 100) {
-    imageSettingsScale += 25;
+  if (imageSettings.scale < 100) {
+    imageSettings.scale += 25;
     applyImageSettings();
   }
 });
@@ -215,13 +213,13 @@ hashtag.addEventListener('input', function () {
 });
 
 document.querySelector('.img-upload__effects').addEventListener('change', function () {
-  imageSettingsEffect = document.querySelector('input[name=effect]:checked').value;
-  imageSettingsPersentage = 1;
+  imageSettings.effect = document.querySelector('input[name=effect]:checked').value;
+  imageSettings.percentage = 1;
   applyImageSettings();
 });
 
 effectLevelPin.addEventListener('mouseup', function () {
-  imageSettingsEffect = document.querySelector('input[name=effect]:checked').value;
-  imageSettingsPersentage = effectLevelPin.offsetLeft / effectLevelLine.offsetWidth;
+  imageSettings.effect = document.querySelector('input[name=effect]:checked').value;
+  imageSettings.percentage = effectLevelPin.offsetLeft / effectLevelLine.offsetWidth;
   applyImageSettings();
 });
