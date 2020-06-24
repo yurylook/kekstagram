@@ -71,6 +71,13 @@ var bodyElement = document.querySelector('body');
 var uploadOverlayElement = document.querySelector('.img-upload__overlay');
 var uploadCancelElement = document.querySelector('#upload-cancel');
 var uploadFileElement = document.querySelector('#upload-file');
+var imgUploadPreviewImg = document.querySelector('.img-upload__preview img');
+var buttonControlSmaller = document.querySelector('.scale__control--smaller');
+var scaleControlValue = document.querySelector('.scale__control--value');
+var buttonControlBigger = document.querySelector('.scale__control--bigger');
+var effectLevelLine = document.querySelector('.effect-level__line');
+var effectLevel = document.querySelector('.img-upload__effect-level');
+var effectLevelPin = document.querySelector('.effect-level__pin');
 
 var onuploadOverlayKeydown = function (evt) {
   if (evt.key === 'Escape') {
@@ -93,30 +100,68 @@ document.querySelector('#upload-file').addEventListener('change', function () {
   document.addEventListener('keydown', onuploadOverlayKeydown);
 });
 
-var imgUploadPreviewImg = document.querySelector('.img-upload__preview img');
-var buttonControlSmaller = document.querySelector('.scale__control--smaller');
-var scaleControlValue = document.querySelector('.scale__control--value');
-var buttonControlBigger = document.querySelector('.scale__control--bigger');
-var value = 100;
-scaleControlValue.value = value + '%';
-
-var updateScalePersentage = function () {
-  var scalePersentage = value / 100;
-  imgUploadPreviewImg.style = 'transform: scale(' + scalePersentage + ');';
-  scaleControlValue.value = value + '%';
+var getFilterStyle = function (newEffect, persentage) {
+  if (newEffect === 'none') {
+    return '';
+  }
+  if (newEffect === 'chrome') {
+    return 'filter: grayscale(' + persentage + ');';
+  }
+  if (newEffect === 'sepia') {
+    return 'filter: sepia(' + persentage + ');';
+  }
+  if (newEffect === 'marvin') {
+    return 'filter: invert(' + persentage * 100 + '%);';
+  }
+  if (newEffect === 'phobos') {
+    return 'filter: blur(' + (1 + persentage * 2) + 'px);';
+  }
+  if (newEffect === 'heat') {
+    return 'filter: brightness(' + persentage * 3 + ');';
+  }
+  return newEffect;
 };
 
+// var imageSettings = {
+// scale: 100,
+// effect: 'none',
+// percentage: 1,
+// };
+var imageSettingsScale = 100;
+var imageSettingsEffect = 'none';
+var imageSettingsPersentage = 1;
+
+
+var applyImageSettings = function () {
+  var scalePersentage = imageSettingsScale / 100;
+  var newEffectClass = 'effect__preview--' + imageSettingsEffect;
+  imgUploadPreviewImg.style = 'transform: scale(' + scalePersentage + '); '
+    + getFilterStyle(imageSettingsEffect, imageSettingsPersentage);
+  imgUploadPreviewImg.className = '';
+  imgUploadPreviewImg.classList.add(newEffectClass);
+  scaleControlValue.value = imageSettingsScale + '%';
+
+  if (imageSettingsEffect === 'none') {
+    effectLevel.classList.add('hidden');
+  } else {
+    effectLevel.classList.remove('hidden');
+  }
+};
+
+applyImageSettings();
+
+
 buttonControlSmaller.addEventListener('click', function () {
-  if (value > 25) {
-    value -= 25;
-    updateScalePersentage(value);
+  if (imageSettingsScale > 25) {
+    imageSettingsScale -= 25;
+    applyImageSettings();
   }
 });
 
 buttonControlBigger.addEventListener('click', function () {
-  if (value < 100) {
-    value += 25;
-    updateScalePersentage(value);
+  if (imageSettingsScale < 100) {
+    imageSettingsScale += 25;
+    applyImageSettings();
   }
 });
 
@@ -169,48 +214,14 @@ hashtag.addEventListener('input', function () {
   hashtag.setCustomValidity('');
 });
 
-var previewImageElement = document.querySelector('.img-upload__preview img');
-var effectLevelLine = document.querySelector('.effect-level__line');
-var effectLevel = document.querySelector('.img-upload__effect-level');
 document.querySelector('.img-upload__effects').addEventListener('change', function () {
-  var newEffect = document.querySelector('input[name=effect]:checked').value;
-  var newEffectClass = 'effect__preview--' + newEffect;
-  previewImageElement.className = '';
-  previewImageElement.classList.add(newEffectClass);
-  var persentage = 1;
-  getFilterStyle(newEffect, persentage);
+  imageSettingsEffect = document.querySelector('input[name=effect]:checked').value;
+  imageSettingsPersentage = 1;
+  applyImageSettings();
 });
 
-var getFilterStyle = function (newEffect, persentage) {
-
-  if (newEffect === 'none') {
-    previewImageElement.style = '';
-    effectLevel.classList.add('hidden');
-  } else {
-    effectLevel.classList.remove('hidden');
-    if (newEffect === 'chrome') {
-      previewImageElement.style = 'filter:grayscale(' + persentage + ');';
-    }
-    if (newEffect === 'sepia') {
-      previewImageElement.style = 'filter: sepia(' + persentage + ');';
-    }
-    if (newEffect === 'marvin') {
-      previewImageElement.style = 'filter: invert(' + persentage * 100 + '%);';
-    }
-    if (newEffect === 'phobos') {
-      previewImageElement.style = 'filter: blur(' + persentage * 3 + 'px);';
-    }
-    if (newEffect === 'heat') {
-      previewImageElement.style = 'filter: brightness(' + persentage * 3 + ');';
-    }
-  }
-  var stringEffect = newEffect + '(' + persentage + ')';
-  return stringEffect;
-};
-
-var effectLevelPin = document.querySelector('.effect-level__pin');
 effectLevelPin.addEventListener('mouseup', function () {
-  var persentage = effectLevelPin.offsetLeft / effectLevelLine.offsetWidth;
-  var newEffect = document.querySelector('input[name=effect]:checked').value;
-  getFilterStyle(newEffect, persentage);
+  imageSettingsEffect = document.querySelector('input[name=effect]:checked').value;
+  imageSettingsPersentage = effectLevelPin.offsetLeft / effectLevelLine.offsetWidth;
+  applyImageSettings();
 });
