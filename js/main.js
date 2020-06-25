@@ -96,6 +96,7 @@ var onuploadOverlayClose = function () {
 document.querySelector('#upload-file').addEventListener('change', function () {
   uploadOverlayElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
+  applyImageSettings();
   uploadCancelElement.addEventListener('click', onuploadOverlayClose);
   document.addEventListener('keydown', onuploadOverlayKeydown);
 });
@@ -118,7 +119,8 @@ var getFilterStyle = function (newEffect, persentage) {
   }
   if (newEffect === 'heat') {
     return 'filter: brightness(' + persentage * 3 + ');';
-  } return newEffect;
+  }
+  return newEffect;
 };
 
 var imageSettings = {
@@ -145,9 +147,6 @@ var applyImageSettings = function () {
     effectLevel.classList.remove('hidden');
   }
 };
-
-applyImageSettings();
-
 
 buttonControlSmaller.addEventListener('click', function () {
   if (imageSettings.scale > 25) {
