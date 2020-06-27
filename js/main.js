@@ -66,8 +66,6 @@
     }
   };
 
-  // applyImageSettings();
-
   buttonControlSmaller.addEventListener('click', function () {
     if (imageSettings.scale > 25) {
       imageSettings.scale -= 25;
