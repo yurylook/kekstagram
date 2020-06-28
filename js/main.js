@@ -22,17 +22,17 @@
     picturesElement.appendChild(window.generatePictureNode(photos[i]));
   }
 
-  var onuploadOverlayKeydown = function (evt) {
+  var onUploadOverlayKeydown = function (evt) {
     if (evt.key === 'Escape') {
-      onuploadOverlayClose();
+      onUploadOverlayClose();
     }
   };
 
-  var onuploadOverlayClose = function () {
+  var onUploadOverlayClose = function () {
     bodyElement.classList.remove('modal-open');
     uploadOverlayElement.classList.add('hidden');
-    uploadCancelElement.removeEventListener('click', onuploadOverlayClose);
-    document.removeEventListener('keydown', onuploadOverlayKeydown);
+    uploadCancelElement.removeEventListener('click', onUploadOverlayClose);
+    document.removeEventListener('keydown', onUploadOverlayKeydown);
     uploadFileElement.value = '';
   };
 
@@ -40,8 +40,8 @@
     uploadOverlayElement.classList.remove('hidden');
     bodyElement.classList.add('modal-open');
     applyImageSettings();
-    uploadCancelElement.addEventListener('click', onuploadOverlayClose);
-    document.addEventListener('keydown', onuploadOverlayKeydown);
+    uploadCancelElement.addEventListener('click', onUploadOverlayClose);
+    document.addEventListener('keydown', onUploadOverlayKeydown);
   });
 
   var imageSettings = {

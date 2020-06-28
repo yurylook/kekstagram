@@ -23,7 +23,8 @@
     }
     if (newEffect === 'heat') {
       return 'filter: brightness(' + persentage * 3 + ');';
-    } return newEffect;
+    }
+    return newEffect;
   };
 
   var isUniqueArray = function (tags) {

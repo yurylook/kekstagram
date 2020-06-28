@@ -28,9 +28,9 @@
 
   window.generatePictureNode = function (pictureData) {
     var template = document
-          .querySelector('#picture')
-          .content
-          .querySelector('a');
+      .querySelector('#picture')
+      .content
+      .querySelector('a');
 
     var pictureElement = template.cloneNode(true);
 
