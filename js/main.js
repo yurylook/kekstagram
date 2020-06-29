@@ -16,11 +16,11 @@
   var effectLevelPin = document.querySelector('.effect-level__pin');
   var hashtag = document.querySelector('.text__hashtags');
 
-  var photos = window.generatePhotos();
-
-  for (var i = 0; i < photos.length; i++) {
-    picturesElement.appendChild(window.generatePictureNode(photos[i]));
-  }
+  window.loadData(function (photos) {
+    for (var i = 0; i < photos.length; i++) {
+      picturesElement.appendChild(window.generatePictureNode(photos[i]));
+    }
+  });
 
   var onUploadOverlayKeydown = function (evt) {
     if (evt.key === 'Escape') {
