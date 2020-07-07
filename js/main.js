@@ -21,6 +21,7 @@
       picturesElement.appendChild(window.generatePictureNode(photos[i]));
     }
     getPhotosRandom(photos);
+    getPhotosCommentsNumber(photos);
     showBigPicture(photos[0]);
     showBigPictures(photos);
   });
@@ -156,10 +157,8 @@
       } else {
         index = (evt.target.src[29]);
       }
-      // console.log(index);
       showBigPicture(photos[index - 1]);
     });
-  //  console.log(photos[1]);
   };
   var maxLengthDescription = 3;
   var description = document.querySelector('.social__footer').
@@ -169,9 +168,10 @@
       description.setCustomValidity('длина комментария не может быть больше 20 символов');
     } else {
       description.setCustomValidity('');
-    // console.log(description.value);
+      console.log(description.value);
     }
   });
+
   var photosRandom = [];
   var getPhotosRandom = function (photos) {
     photosRandom[0] = photos[window.generateRandomNumber(0, 24)];
@@ -185,15 +185,24 @@
       }
       n = photosRandom.length;
     }
-    // console.log(photosRandom);
+    console.log(photosRandom);
   };
 
-  // var photosCommentsNumber = [];
-  // var getPhotosCommentsNumber = function (photos) {
-  // for (var i = 0; i < 25; i++) {
-  // photosCommentsNumber.push(photos[i]);
-  // }
+  var photosCommentsNumber = [];
+  var getPhotosCommentsNumber = function (photos) {
+    for (var i = 0; i < 25; i++) {
+      photosCommentsNumber.push(photos[i]);
+    }
+    photosCommentsNumber.sort(function (a, b) {
+      if (a.comments.length > b.comments.length) {
+        return -1;
+      }
+      if (a.comments.length < b.comments.length) {
+        return 1;
+      }
+      return 0;
+    });
+    console.log(photosCommentsNumber);
+  };
 
 }());
-
-
