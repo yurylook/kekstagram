@@ -20,6 +20,7 @@
     for (var i = 0; i < photos.length; i++) {
       picturesElement.appendChild(window.generatePictureNode(photos[i]));
     }
+    getPhotosRandom(photos);
     showBigPicture(photos[0]);
     showBigPictures(photos);
   });
@@ -155,10 +156,10 @@
       } else {
         index = (evt.target.src[29]);
       }
-      console.log(index);
+      // console.log(index);
       showBigPicture(photos[index - 1]);
     });
-    console.log(photos[1]);
+  //  console.log(photos[1]);
   };
   var maxLengthDescription = 3;
   var description = document.querySelector('.social__footer').
@@ -168,9 +169,30 @@
       description.setCustomValidity('длина комментария не может быть больше 20 символов');
     } else {
       description.setCustomValidity('');
-      console.log(description.value);
+    // console.log(description.value);
     }
   });
+  var photosRandom = [];
+  var getPhotosRandom = function (photos) {
+    photosRandom[0] = photos[window.generateRandomNumber(0, 24)];
+    var n = 1;
+    while (n < 10) {
+      photosRandom[n] = photos[window.generateRandomNumber(0, 24)];
+      for (var i = 0; i < n; i++) {
+        if (photosRandom[i] === photosRandom[n]) {
+          photosRandom.pop();
+        }
+      }
+      n = photosRandom.length;
+    }
+    // console.log(photosRandom);
+  };
+
+  // var photosCommentsNumber = [];
+  // var getPhotosCommentsNumber = function (photos) {
+  // for (var i = 0; i < 25; i++) {
+  // photosCommentsNumber.push(photos[i]);
+  // }
 
 }());
 
