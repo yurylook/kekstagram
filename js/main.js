@@ -103,29 +103,35 @@
     applyImageSettings();
   });
 
+  var generateSocialCommentNode = function (comment) {
+    var template = document.querySelector('#social_comment_template').content;
+    var socialCommentElement = template.cloneNode(true);
+    var socialCommentImageElement = socialCommentElement.querySelector('img');
+    socialCommentImageElement.src = comment.avatar;
+    socialCommentImageElement.alt = comment.name;
+    socialCommentElement.querySelector('.social__text').innerText = comment.message;
+
+    return socialCommentElement;
+  };
+
   var showBigPicture = function (photo) {
-    document.querySelector('.big-picture').
-    classList.remove('hidden');
-    document.querySelector('.big-picture__img img ').
-    src = photo.url;
-    document.querySelector('.likes-count').
-    innerText = photo.likes;
+    document.querySelector('.big-picture'). classList.remove('hidden');
+    document.querySelector('.big-picture__img img ').src = photo.url;
+    document.querySelector('.likes-count').innerText = photo.likes;
     var commentCount = document.querySelector('.comments-count');
     commentCount.innerText = photo.comments.length;
-    var socialComments = document.querySelector('.social__comment');
+    var socialComments = document.querySelector('.social__comments');
+    socialComments.innerHTML = '';
+
     for (var i = 0; i < photo.comments.length; i++) {
-      socialComments.src = photo.comments[i].avatar;
-      socialComments.alt = photo.comments[i].name;
-      socialComments.width = 35;
-      socialComments.height = 35;
-      socialComments.querySelector('.social__text').innerText = photo.comments[i].message;
+      var socialCommentElement = generateSocialCommentNode(photo.comments[i]);
+      socialComments.appendChild(socialCommentElement);
     }
+
     var bigPictureDescription = document.querySelector('.social__caption');
     bigPictureDescription.innerText = photo.description;
-    document.querySelector('.social__comment-count').
-    classList.add('hidden');
-    document.querySelector('.social__comments-loader ').
-    classList.add('hidden');
+    document.querySelector('.social__comment-count').classList.add('hidden');
+    document.querySelector('.social__comments-loader '). classList.add('hidden');
     bodyElement.classList.add('modal-open');
   };
 
