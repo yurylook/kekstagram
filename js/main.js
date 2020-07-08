@@ -116,7 +116,7 @@
 
   var showBigPicture = function (photo) {
     document.querySelector('.big-picture').classList.remove('hidden');
-    document.querySelector('.big-picture__img img ').src = photo.url;
+    document.querySelector('.big-picture__img img').src = photo.url;
     document.querySelector('.likes-count').innerText = photo.likes;
     document.querySelector('.comments-count').innerText = photo.comments.length;
     var socialComments = document.querySelector('.social__comments');
@@ -130,7 +130,7 @@
     var bigPictureDescription = document.querySelector('.social__caption');
     bigPictureDescription.innerText = photo.description;
     document.querySelector('.social__comment-count').classList.add('hidden');
-    document.querySelector('.social__comments-loader '). classList.add('hidden');
+    document.querySelector('.social__comments-loader').classList.add('hidden');
     bodyElement.classList.add('modal-open');
   };
 
