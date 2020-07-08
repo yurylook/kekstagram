@@ -115,11 +115,10 @@
   };
 
   var showBigPicture = function (photo) {
-    document.querySelector('.big-picture'). classList.remove('hidden');
+    document.querySelector('.big-picture').classList.remove('hidden');
     document.querySelector('.big-picture__img img ').src = photo.url;
     document.querySelector('.likes-count').innerText = photo.likes;
-    var commentCount = document.querySelector('.comments-count');
-    commentCount.innerText = photo.comments.length;
+    document.querySelector('.comments-count').innerText = photo.comments.length;
     var socialComments = document.querySelector('.social__comments');
     socialComments.innerHTML = '';
 
