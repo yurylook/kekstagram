@@ -98,11 +98,11 @@
     applyImageSettings();
   });
 
-  effectLevelPin.addEventListener('mouseup', function () {
-    imageSettings.effect = document.querySelector('input[name=effect]:checked').value;
-    imageSettings.percentage = effectLevelPin.offsetLeft / effectLevelLine.offsetWidth;
-    applyImageSettings();
-  });
+  // effectLevelPin.addEventListener('mouseup', function () {
+  // imageSettings.effect = document.querySelector('input[name=effect]:checked').value;
+  // imageSettings.percentage = effectLevelPin.offsetLeft / effectLevelLine.offsetWidth;
+  // applyImageSettings();
+  // });
 
   var generateSocialCommentNode = function (comment) {
     var template = document.querySelector('#social_comment_template').content;
@@ -172,6 +172,48 @@
       newUserComment.setCustomValidity('длинный');
     }
     console.log(newUserComment.value);
+  });
+
+  effectLevelPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      if (effectLevelPin.offsetLeft < effectLevelLine.offsetWidth) {
+        effectLevelPin.style.left = (effectLevelPin.offsetLeft - shift.x) + 'px';
+        console.log(effectLevelPin.style.left);
+        console.log(startCoords.x);
+        console.log(effectLevelLine.offsetLeft);
+      }
+
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      imageSettings.effect = document.querySelector('input[name=effect]:checked').value;
+      imageSettings.percentage = effectLevelPin.offsetLeft / effectLevelLine.offsetWidth;
+      applyImageSettings();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
   });
 
 }());
