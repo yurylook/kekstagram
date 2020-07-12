@@ -14,7 +14,10 @@
   var effectLevelLine = document.querySelector('.effect-level__line');
   var effectLevel = document.querySelector('.img-upload__effect-level');
   var effectLevelPin = document.querySelector('.effect-level__pin');
+  var effectLevelDepth = document.querySelector('.effect-level__depth');
   var hashtag = document.querySelector('.text__hashtags');
+  var description = document.querySelector('.text__description');
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 
   window.loadData(function (photos) {
     for (var i = 0; i < photos.length; i++) {
@@ -22,6 +25,8 @@
     }
     // showBigPicture(photos[0]);
     showBigPictures(photos);
+    getPhotosRandom(photos);
+    getPhotosCommentsNumber(photos);
   });
 
   var onUploadOverlayKeydown = function (evt) {
@@ -98,11 +103,14 @@
     applyImageSettings();
   });
 
-  // effectLevelPin.addEventListener('mouseup', function () {
-  // imageSettings.effect = document.querySelector('input[name=effect]:checked').value;
-  // imageSettings.percentage = effectLevelPin.offsetLeft / effectLevelLine.offsetWidth;
-  // applyImageSettings();
-  // });
+  description.addEventListener('input', function () {
+    if (description.value.length > 10) {
+      description.setCustomValidity('длина комментария не должна превышать 140 символов');
+    } else {
+      description.setCustomValidity('');
+    }
+    // console.log(description.value);
+  });
 
   var generateSocialCommentNode = function (comment) {
     var template = document.querySelector('#social_comment_template').content;
@@ -171,7 +179,7 @@
     if (newUserComment.value > 140) {
       newUserComment.setCustomValidity('длинный');
     }
-    console.log(newUserComment.value);
+    // console.log(newUserComment.value);
   });
 
   effectLevelPin.addEventListener('mousedown', function (evt) {
@@ -196,9 +204,13 @@
 
       if (effectLevelPin.offsetLeft < effectLevelLine.offsetWidth) {
         effectLevelPin.style.left = (effectLevelPin.offsetLeft - shift.x) + 'px';
-        console.log(effectLevelPin.style.left);
-        console.log(startCoords.x);
-        console.log(effectLevelLine.offsetLeft);
+        effectLevelDepth.style.left = (effectLevelDepth.offsetLeft - shift.x) + 'px';
+        // console.log(effectLevelPin.style.left);
+        // console.log(startCoords.x);
+        // console.log(effectLevelPin.offsetLeft);
+        // console.log (effectLevelDepth.offsetLeft);
+      } else {
+        effectLevelPin.style.left = (effectLevelLine.offsetWidth) + 'px';
       }
 
     };
@@ -215,6 +227,40 @@
     document.addEventListener('mouseup', onMouseUp);
 
   });
+
+  var photosRandom = [];
+  var getPhotosRandom = function (photos) {
+    photosRandom[0] = photos[window.generateRandomNumber(0, 24)];
+    var n = 1;
+    while (n < 10) {
+      photosRandom[n] = photos[window.generateRandomNumber(0, 24)];
+      for (var i = 0; i < n; i++) {
+        if (photosRandom[i] === photosRandom[n]) {
+          photosRandom.pop();
+        }
+      }
+      n = photosRandom.length;
+    }
+    // console.log(photosRandom);
+  };
+
+  var photosCommentsNumber = [];
+  var getPhotosCommentsNumber = function (photos) {
+    for (var i = 0; i < photos.length; i++) {
+      photosCommentsNumber[i] = photos[i];
+    }
+    photosCommentsNumber.sort(function (a, b) {
+      if (a.comments.length > b.comments.length) {
+        return -1;
+      }
+      if (a.comments.length < b.comments.length) {
+        return 1;
+      }
+      return 0;
+    });
+    // console.log(photosCommentsNumber);
+
+  };
 
 }());
 
