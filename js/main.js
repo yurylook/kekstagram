@@ -14,7 +14,6 @@
   var effectLevel = document.querySelector('.img-upload__effect-level');
   var hashtag = document.querySelector('.text__hashtags');
   var newUserComment = document.querySelector('.social__footer').querySelector('input');
-  var description = document.querySelector('.text__description');
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 
   window.loadData(function (photos) {
@@ -98,14 +97,6 @@
     applyImageSettings();
   });
 
-  description.addEventListener('input', function () {
-    if (description.value.length > 140) {
-      description.setCustomValidity('длина комментария не должна превышать 140 символов');
-    } else {
-      description.setCustomValidity('');
-    }
-  });
-
   var generateSocialCommentNode = function (comment) {
     var template = document.querySelector('#social_comment_template').content;
     var socialCommentElement = template.cloneNode(true);
@@ -137,27 +128,24 @@
     bodyElement.classList.add('modal-open');
   };
 
-  var bigPictureCansel = function () {
-    document.querySelector('.big-picture').
-    classList.add('hidden');
+  var hideBigPicture = function () {
+    document.querySelector('.big-picture').classList.add('hidden');
     bodyElement.classList.remove('modal-open');
   };
 
-  document.querySelector('#picture-cancel').
-  addEventListener('click', function () {
-    bigPictureCansel();
+  document.querySelector('#picture-cancel').addEventListener('click', function () {
+    hideBigPicture();
   });
 
-  var bigPictureCanselKey = function (evt) {
+  var hideBigPictureKey = function (evt) {
     if (evt.key === 'Escape') {
-      bigPictureCansel();
+      hideBigPicture();
     }
   };
-  document.addEventListener('keydown', bigPictureCanselKey);
+  document.addEventListener('keydown', hideBigPictureKey);
 
   var showBigPictures = function (photos) {
-    document.querySelector('.pictures').
-    addEventListener('click', function (evt) {
+    document.querySelector('.pictures').addEventListener('click', function (evt) {
       var dataId = evt.target.getAttribute('data-id');
       if (dataId === null || dataId === '') {
         return;
