@@ -63,4 +63,8 @@
     return '';
   };
 
+  window.clip = function (value, minValue, maxValue) {
+    return Math.max(minValue, Math.min(maxValue, value));
+  };
+
 }());
