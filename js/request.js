@@ -10,4 +10,5 @@
     xhr.open('GET', 'https://javascript.pages.academy/kekstagram/data');
     xhr.send();
   };
+
 }());
