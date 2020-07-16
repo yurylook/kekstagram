@@ -12,7 +12,6 @@
   var effectLevel = document.querySelector('.img-upload__effect-level');
   var hashtag = document.querySelector('.text__hashtags');
   var newUserComment = document.querySelector('.social__footer').querySelector('input');
-  var description = document.querySelector('.text__description');
 
   var imageSettings = {
     scale: 100,
@@ -65,14 +64,24 @@
     imageSettings.percentage = 1;
     window.applyImageSettings();
   });
-
+  var maxLengthDescription = 140;
+  var description = document.querySelector('.img-upload__text').
+    querySelector('textarea');
   description.addEventListener('input', function () {
-    if (description.value.length > 140) {
-      description.setCustomValidity('длина комментария не должна превышать 140 символов');
+    if (description.value.length > maxLengthDescription) {
+      description.setCustomValidity('длина комментария не может быть больше 140 символов');
     } else {
       description.setCustomValidity('');
+      console.log(description.setCustomValidity);
+      //  });
     }
   });
+
+  // var sendButton = document.querySelector('#upload-submit');
+  // sendButton.addEventListener('click', function() {
+
+  // console.log(description.setCustomValidity);
+  // });
 
   var generateSocialCommentNode = function (comment) {
     var template = document.querySelector('#social_comment_template').content;
@@ -81,7 +90,6 @@
     socialCommentImageElement.src = comment.avatar;
     socialCommentImageElement.alt = comment.name;
     socialCommentElement.querySelector('.social__text').innerText = comment.message;
-
     return socialCommentElement;
   };
 
@@ -105,27 +113,24 @@
     bodyElement.classList.add('modal-open');
   };
 
-  var bigPictureCansel = function () {
-    document.querySelector('.big-picture').
-    classList.add('hidden');
+  var hideBigPicture = function () {
+    document.querySelector('.big-picture').classList.add('hidden');
     bodyElement.classList.remove('modal-open');
   };
 
-  document.querySelector('#picture-cancel').
-  addEventListener('click', function () {
-    bigPictureCansel();
+  document.querySelector('#picture-cancel').addEventListener('click', function () {
+    hideBigPicture();
   });
 
-  var bigPictureCanselKey = function (evt) {
+  var hideBigPictureKey = function (evt) {
     if (evt.key === 'Escape') {
-      bigPictureCansel();
+      hideBigPicture();
     }
   };
-  document.addEventListener('keydown', bigPictureCanselKey);
+  document.addEventListener('keydown', hideBigPictureKey);
 
   window.showBigPictures = function (photos) {
-    document.querySelector('.pictures').
-    addEventListener('click', function (evt) {
+    document.querySelector('.pictures').addEventListener('click', function (evt) {
       var dataId = evt.target.getAttribute('data-id');
       if (dataId === null || dataId === '') {
         return;
@@ -188,8 +193,6 @@
     };
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-
   });
-
 
 }());
