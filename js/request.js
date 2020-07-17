@@ -10,6 +10,7 @@
     xhr.open('GET', 'https://javascript.pages.academy/kekstagram/data');
     xhr.send();
   };
+
   window.sendData = function (data, onSucess) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';

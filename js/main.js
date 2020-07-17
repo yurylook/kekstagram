@@ -5,7 +5,6 @@
   var uploadOverlayElement = document.querySelector('.img-upload__overlay');
   var uploadCancelElement = document.querySelector('#upload-cancel');
   var uploadFileElement = document.querySelector('#upload-file');
-
   var picturesElement = document.querySelector('.pictures');
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 
