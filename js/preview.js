@@ -12,6 +12,7 @@
   var effectLevel = document.querySelector('.img-upload__effect-level');
   var hashtag = document.querySelector('.text__hashtags');
   var newUserComment = document.querySelector('.social__footer').querySelector('input');
+  var textDescription = document.querySelector('.text__description');
 
   var imageSettings = {
     scale: 100,
@@ -19,8 +20,20 @@
     percentage: 1,
   };
 
+  window.clearPreview = function () {
+    hashtag.value = '';
+    textDescription.value = '';
+    imageSettings = {
+      scale: 100,
+      effect: 'none',
+      percentage: 1,
+    };
+    window.applyImageSettings();
+  };
+
   window.applyImageSettings = function () {
     var scalePersentage = imageSettings.scale / 100;
+    document.querySelector('input#effect-' + imageSettings.effect).checked = true;
     var newEffectClass = 'effect__preview--' + imageSettings.effect;
     imgUploadPreviewImg.style = 'transform: scale(' + scalePersentage + '); '
       + window.getFilterStyle(imageSettings.effect, imageSettings.percentage);
@@ -64,24 +77,6 @@
     imageSettings.percentage = 1;
     window.applyImageSettings();
   });
-  var maxLengthDescription = 140;
-  var description = document.querySelector('.img-upload__text').
-    querySelector('textarea');
-  description.addEventListener('input', function () {
-    if (description.value.length > maxLengthDescription) {
-      description.setCustomValidity('длина комментария не может быть больше 140 символов');
-    } else {
-      description.setCustomValidity('');
-    // console.log(description.setCustomValidity);
-      //  });
-    }
-  });
-
-  // var sendButton = document.querySelector('#upload-submit');
-  // sendButton.addEventListener('click', function() {
-
-  // console.log(description.setCustomValidity);
-  // });
 
   var generateSocialCommentNode = function (comment) {
     var template = document.querySelector('#social_comment_template').content;

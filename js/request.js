@@ -11,48 +11,47 @@
     xhr.send();
   };
 
-  window.sendData = function (data, onSucess) {
+  window.sendData = function (data, onSucess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      onSucess(xhr.response);
+      return xhr.status === 200 ? onSucess() : onError();
+
     });
 
-    xhr.open('POST', ' https://javascript.pages.academy/kekstagram');
+    xhr.open('POST', 'https://javascript.pages.academy/kekstagram');
     xhr.send(data);
-
   };
-  var er = 1;
-  var form = document.querySelector('.img-upload__form');
-  console.log(form);
-  form.addEventListener('submit', function (evt) {
-    if (er > 0) {
-      window.sendData(new FormData(form), function (response) {
-      // successTitleOpen();
-      });
-    } else {
-      errorTitleOpen();
-    }
-    evt.preventDefault();
 
-  //  window.applyImageSettings();
+  var form = document.querySelector('.img-upload__form');
+  form.addEventListener('submit', function (evt) {
+    window.sendData(new FormData(form), function () {
+      window.onUploadOverlayClose();
+      successTitleOpen();
+    }, function () {
+      window.onUploadOverlayClose();
+      errorTitleOpen();
+    });
+
+    evt.preventDefault();
   });
   var successTitle = document.querySelector('main');
-  var generateSuccessSend = function() {
+  var generateSuccessSend = function () {
     var template = document.querySelector('#success').content
      .querySelector('section');
     var successSend = template.cloneNode(true);
     return successSend;
+
   };
 
-  var successTitleOpen = function() {
+  var successTitleOpen = function () {
     successTitle.appendChild(generateSuccessSend());
 
     var successTitleClose = function () {
-      successTitle.querySelector('.success').classList.add('hidden');
+      successTitle.querySelector('.success').remove();
     };
-    // successTitle.querySelector('.success__button').addEventListener('click', function() {
+
     document.addEventListener('click', function () {
       successTitleClose();
     });
@@ -66,23 +65,21 @@
     document.addEventListener('keydown', successTitleCloseKey);
   };
 
-  successTitleOpen();
-
   var errorTitle = document.querySelector('main');
-  var generateErrorSend = function() {
+  var generateErrorSend = function () {
     var template = document.querySelector('#error').content
      .querySelector('section');
     var errorSend = template.cloneNode(true);
     return errorSend;
   };
 
-  var errorTitleOpen = function() {
+  var errorTitleOpen = function () {
     errorTitle.appendChild(generateErrorSend());
 
     var errorTitleClose = function () {
-      errorTitle.querySelector('.error').classList.add('hidden');
+      errorTitle.querySelector('.error').remove();
     };
-    // successTitle.querySelector('.success__button').addEventListener('click', function() {
+
     document.addEventListener('click', function () {
       errorTitleClose();
     });
@@ -95,17 +92,5 @@
 
     document.addEventListener('keydown', errorTitleCloseKey);
   };
-
-  var maxLengthDescription = 140;
-  var description = document.querySelector('.img-upload__text').
-  querySelector('textarea');
-  description.addEventListener('input', function () {
-    if (description.value.length > maxLengthDescription) {
-      description.setCustomValidity('длина комментария не может быть больше 140 символов');
-    } else {
-      description.setCustomValidity('');
-    }
-  });
-  // errorTitleOpen();
 
 }());
