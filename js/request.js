@@ -22,7 +22,7 @@
     xhr.send(data);
 
   };
-  var er = 0;
+  var er = 1;
   var form = document.querySelector('.img-upload__form');
   console.log(form);
   form.addEventListener('submit', function (evt) {

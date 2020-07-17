@@ -72,7 +72,7 @@
       description.setCustomValidity('длина комментария не может быть больше 140 символов');
     } else {
       description.setCustomValidity('');
-      console.log(description.setCustomValidity);
+    // console.log(description.setCustomValidity);
       //  });
     }
   });
