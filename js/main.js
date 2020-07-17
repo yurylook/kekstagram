@@ -13,6 +13,8 @@
       picturesElement.appendChild(window.generatePictureNode(photos[i], i));
     }
     window.showBigPictures(photos);
+    getPhotosRandom(photos);
+    getPhotosCommentsNumber(photos);
   });
 
   var onUploadOverlayKeydown = function (evt) {
@@ -36,5 +38,38 @@
     uploadCancelElement.addEventListener('click', onUploadOverlayClose);
     document.addEventListener('keydown', onUploadOverlayKeydown);
   });
+
+  var photosRandom = [];
+  var getPhotosRandom = function (photos) {
+    photosRandom[0] = photos[window.generateRandomNumber(0, 24)];
+    var n = 1;
+    while (n < 10) {
+      photosRandom[n] = photos[window.generateRandomNumber(0, 24)];
+      for (var i = 0; i < n; i++) {
+        if (photosRandom[i] === photosRandom[n]) {
+          photosRandom.pop();
+        }
+      }
+      n = photosRandom.length;
+    }
+    console.log(photosRandom);
+  };
+
+  var photosCommentsNumber = [];
+  var getPhotosCommentsNumber = function (photos) {
+    for (var i = 0; i < photos.length; i++) {
+      photosCommentsNumber[i] = photos[i];
+    }
+    photosCommentsNumber.sort(function (a, b) {
+      if (a.comments.length > b.comments.length) {
+        return -1;
+      }
+      if (a.comments.length < b.comments.length) {
+        return 1;
+      }
+      return 0;
+    });
+    console.log(photosCommentsNumber);
+  };
 
 }());
