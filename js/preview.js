@@ -12,12 +12,23 @@
   var effectLevel = document.querySelector('.img-upload__effect-level');
   var hashtag = document.querySelector('.text__hashtags');
   var newUserComment = document.querySelector('.social__footer').querySelector('input');
-  var description = document.querySelector('.text__description');
+  var textDescription = document.querySelector('.text__description');
 
   var imageSettings = {
     scale: 100,
     effect: 'none',
     percentage: 1,
+  };
+
+  window.clearPreview = function () {
+    hashtag.value = '';
+    textDescription.value = '';
+    imageSettings = {
+      scale: 100,
+      effect: 'none',
+      percentage: 1,
+    };
+    window.applyImageSettings();
   };
 
   window.applyImageSettings = function () {
@@ -66,11 +77,11 @@
     window.applyImageSettings();
   });
 
-  description.addEventListener('input', function () {
-    if (description.value.length > 140) {
-      description.setCustomValidity('длина комментария не должна превышать 140 символов');
+  textDescription.addEventListener('input', function () {
+    if (textDescription.value.length > 140) {
+      textDescription.setCustomValidity('длина комментария не должна превышать 140 символов');
     } else {
-      description.setCustomValidity('');
+      textDescription.setCustomValidity('');
     }
   });
 

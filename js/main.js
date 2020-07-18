@@ -17,14 +17,14 @@
 
   var onUploadOverlayKeydown = function (evt) {
     if (evt.key === 'Escape') {
-      onUploadOverlayClose();
+      window.onUploadOverlayClose();
     }
   };
 
-  var onUploadOverlayClose = function () {
+  window.onUploadOverlayClose = function () {
     bodyElement.classList.remove('modal-open');
     uploadOverlayElement.classList.add('hidden');
-    uploadCancelElement.removeEventListener('click', onUploadOverlayClose);
+    uploadCancelElement.removeEventListener('click', window.onUploadOverlayClose);
     document.removeEventListener('keydown', onUploadOverlayKeydown);
     uploadFileElement.value = '';
   };
@@ -33,7 +33,7 @@
     uploadOverlayElement.classList.remove('hidden');
     bodyElement.classList.add('modal-open');
     window.applyImageSettings();
-    uploadCancelElement.addEventListener('click', onUploadOverlayClose);
+    uploadCancelElement.addEventListener('click', window.onUploadOverlayClose);
     document.addEventListener('keydown', onUploadOverlayKeydown);
   });
 
