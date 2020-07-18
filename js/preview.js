@@ -33,6 +33,7 @@
 
   window.applyImageSettings = function () {
     var scalePersentage = imageSettings.scale / 100;
+    document.querySelector('input#effect-' + imageSettings.effect).checked = true;
     var newEffectClass = 'effect__preview--' + imageSettings.effect;
     imgUploadPreviewImg.style = 'transform: scale(' + scalePersentage + '); '
       + window.getFilterStyle(imageSettings.effect, imageSettings.percentage);
@@ -77,14 +78,6 @@
     window.applyImageSettings();
   });
 
-  textDescription.addEventListener('input', function () {
-    if (textDescription.value.length > 140) {
-      textDescription.setCustomValidity('длина комментария не должна превышать 140 символов');
-    } else {
-      textDescription.setCustomValidity('');
-    }
-  });
-
   var generateSocialCommentNode = function (comment) {
     var template = document.querySelector('#social_comment_template').content;
     var socialCommentElement = template.cloneNode(true);
@@ -92,7 +85,6 @@
     socialCommentImageElement.src = comment.avatar;
     socialCommentImageElement.alt = comment.name;
     socialCommentElement.querySelector('.social__text').innerText = comment.message;
-
     return socialCommentElement;
   };
 
@@ -116,27 +108,24 @@
     bodyElement.classList.add('modal-open');
   };
 
-  var bigPictureCansel = function () {
-    document.querySelector('.big-picture').
-    classList.add('hidden');
+  var hideBigPicture = function () {
+    document.querySelector('.big-picture').classList.add('hidden');
     bodyElement.classList.remove('modal-open');
   };
 
-  document.querySelector('#picture-cancel').
-  addEventListener('click', function () {
-    bigPictureCansel();
+  document.querySelector('#picture-cancel').addEventListener('click', function () {
+    hideBigPicture();
   });
 
-  var bigPictureCanselKey = function (evt) {
+  var hideBigPictureKey = function (evt) {
     if (evt.key === 'Escape') {
-      bigPictureCansel();
+      hideBigPicture();
     }
   };
-  document.addEventListener('keydown', bigPictureCanselKey);
+  document.addEventListener('keydown', hideBigPictureKey);
 
   window.showBigPictures = function (photos) {
-    document.querySelector('.pictures').
-    addEventListener('click', function (evt) {
+    document.querySelector('.pictures').addEventListener('click', function (evt) {
       var dataId = evt.target.getAttribute('data-id');
       if (dataId === null || dataId === '') {
         return;
