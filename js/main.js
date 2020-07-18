@@ -22,6 +22,7 @@
   };
 
   window.onUploadOverlayClose = function () {
+    window.clearPreview();
     bodyElement.classList.remove('modal-open');
     uploadOverlayElement.classList.add('hidden');
     uploadCancelElement.removeEventListener('click', window.onUploadOverlayClose);
