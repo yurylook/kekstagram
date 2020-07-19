@@ -13,8 +13,8 @@
       picturesElement.appendChild(window.generatePictureNode(photos[i], i));
     }
     window.showBigPictures(photos);
+    getPhotosServer(photos);
   });
-
   var onUploadOverlayKeydown = function (evt) {
     if (evt.key === 'Escape') {
       window.onUploadOverlayClose();
@@ -36,6 +36,81 @@
     window.applyImageSettings();
     uploadCancelElement.addEventListener('click', window.onUploadOverlayClose);
     document.addEventListener('keydown', onUploadOverlayKeydown);
+  });
+
+  var photosCommentsNumber = [];
+  var getPhotosCommentsNumber = function (photos) {
+    for (var i = 0; i < photos.length; i++) {
+      photosCommentsNumber[i] = photos[i];
+    }
+    photosCommentsNumber.sort(function (a, b) {
+      if (a.comments.length > b.comments.length) {
+        return -1;
+      }
+      if (a.comments.length < b.comments.length) {
+        return 1;
+      }
+      return 0;
+    });
+
+  };
+
+  var buttonPhotosCommentsNumber = document.querySelector('.img-filters').querySelector('#filter-discussed');
+  var buttonPhotosRandom = document.querySelector('.img-filters').querySelector('#filter-random');
+  var buttonPhotos = document.querySelector('.img-filters').querySelector('#filter-default');
+  var clearingPhotos = function (picturesElement) {
+    var elemLast = picturesElement.lastChild;
+    while (elemLast.tagName === 'A') {
+      picturesElement.removeChild(elemLast);
+      elemLast = picturesElement.lastChild;
+    }
+  };
+
+  var loadDataPhotos = (function (photos) {
+    for (var i = 0; i < photos.length; i++) {
+      picturesElement.appendChild(window.generatePictureNode(photos[i], i));
+    }
+    window.showBigPictures(photos);
+  });
+
+  var photosServer = [];
+  var getPhotosServer = function (photos) {
+    for (var i = 0; i < photos.length; i++) {
+      photosServer[i] = photos[i];
+    }
+  };
+
+  var photosRandom = [];
+  var getPhotosRandom = function (photos) {
+    photosRandom = [];
+    photosRandom[0] = photos[window.generateRandomNumber(0, 24)];
+    var n = 1;
+    while (n < 10) {
+      photosRandom[n] = photos[window.generateRandomNumber(0, 24)];
+      for (var i = 0; i < n; i++) {
+        if (photosRandom[i] === photosRandom[n]) {
+          photosRandom.pop();
+        }
+      }
+      n = photosRandom.length;
+    }
+  };
+
+  buttonPhotosCommentsNumber.addEventListener('click', function () {
+    getPhotosCommentsNumber(photosServer);
+    clearingPhotos(picturesElement);
+    setTimeout(loadDataPhotos, 500, photosCommentsNumber);
+  });
+
+  buttonPhotosRandom.addEventListener('click', function () {
+    getPhotosRandom(photosServer);
+    clearingPhotos(picturesElement);
+    setTimeout(loadDataPhotos, 500, photosRandom);
+  });
+
+  buttonPhotos.addEventListener('click', function () {
+    clearingPhotos(picturesElement);
+    setTimeout(loadDataPhotos, 500, photosServer);
   });
 
 }());
