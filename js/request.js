@@ -11,4 +11,17 @@
     xhr.send();
   };
 
+  window.sendData = function (data, onSucess, onError) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+
+    xhr.addEventListener('load', function () {
+      return xhr.status === 200 ? onSucess() : onError();
+
+    });
+
+    xhr.open('POST', 'https://javascript.pages.academy/kekstagram');
+    xhr.send(data);
+  };
+
 }());
