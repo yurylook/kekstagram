@@ -28,69 +28,60 @@
   form.addEventListener('submit', function (evt) {
     window.sendData(new FormData(form), function () {
       window.onUploadOverlayClose();
-      successTitleOpen();
+      window.openSuccessMessage();
     }, function () {
       window.onUploadOverlayClose();
-      errorTitleOpen();
+      window.openErrorMessage();
     });
 
     evt.preventDefault();
   });
-  var successTitle = document.querySelector('main');
-  var generateSuccessSend = function () {
-    var template = document.querySelector('#success').content
-     .querySelector('section');
-    var successSend = template.cloneNode(true);
-    return successSend;
 
-  };
+  var mainElement = document.querySelector('main');
 
-  var successTitleOpen = function () {
-    successTitle.appendChild(generateSuccessSend());
+  window.openSuccessMessage = function () {
+    mainElement.appendChild(window.generateSuccessSend());
 
-    var successTitleClose = function () {
-      successTitle.querySelector('.success').remove();
+    var onCloseSuccessMessage = function () {
+      mainElement.querySelector('.success').remove();
+      document.removeEventListener('click', onCloseSuccessMessage);
+      document.removeEventListener('keydown', onSuccessMessageKeydown);
     };
 
     document.addEventListener('click', function () {
-      successTitleClose();
+      onCloseSuccessMessage();
     });
 
-    var successTitleCloseKey = function (evt) {
+    var onSuccessMessageKeydown = function (evt) {
       if (evt.key === 'Escape') {
-        successTitleClose();
+        onCloseSuccessMessage();
       }
     };
 
-    document.addEventListener('keydown', successTitleCloseKey);
+    document.addEventListener('keydown', onSuccessMessageKeydown);
   };
 
-  var errorTitle = document.querySelector('main');
-  var generateErrorSend = function () {
-    var template = document.querySelector('#error').content
-     .querySelector('section');
-    var errorSend = template.cloneNode(true);
-    return errorSend;
-  };
+  window.openErrorMessage = function () {
+    mainElement.appendChild(window.generateErrorSend());
 
-  var errorTitleOpen = function () {
-    errorTitle.appendChild(generateErrorSend());
-
-    var errorTitleClose = function () {
-      errorTitle.querySelector('.error').remove();
+    var onCloseErrorMessage = function () {
+      mainElement.querySelector('.error').remove();
+      document.removeEventListener('click', onCloseErrorMessage);
+      document.removeEventListener('keydown', onErrorMessageKeydown);
     };
 
     document.addEventListener('click', function () {
-      errorTitleClose();
+      onCloseErrorMessage();
     });
 
-    var errorTitleCloseKey = function (evt) {
+    var onErrorMessageKeydown = function (evt) {
       if (evt.key === 'Escape') {
-        errorTitleClose();
+        onCloseErrorMessage();
       }
     };
 
-    document.addEventListener('keydown', errorTitleCloseKey);
+    document.addEventListener('keydown', onErrorMessageKeydown);
   };
+
 
 }());

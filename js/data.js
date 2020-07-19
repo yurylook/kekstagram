@@ -18,4 +18,18 @@
     return pictureElement;
   };
 
+  window.generateErrorSend = function () {
+    var template = document.querySelector('#error').content
+     .querySelector('section');
+    var errorSend = template.cloneNode(true);
+    return errorSend;
+  };
+
+  window.generateSuccessSend = function () {
+    var template = document.querySelector('#success').content
+     .querySelector('section');
+    var successSend = template.cloneNode(true);
+    return successSend;
+  };
+
 }());
