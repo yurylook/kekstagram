@@ -60,11 +60,12 @@
   var buttonPhotosRandom = document.querySelector('.img-filters').querySelector('#filter-random');
   buttonPhotosRandom.classList.add('img-filters__button--active');
   var buttonPhotos = document.querySelector('.img-filters').querySelector('#filter-default');
-  var clearingPhotos = function (picturesElement) {
-    var elemLast = picturesElement.lastChild;
+
+  var clearingPhotos = function (pistureChilds) {
+    var elemLast = pistureChilds.lastChild;
     while (elemLast.tagName === 'A') {
-      picturesElement.removeChild(elemLast);
-      elemLast = picturesElement.lastChild;
+      pistureChilds.removeChild(elemLast);
+      elemLast = pistureChilds.lastChild;
     }
   };
 
