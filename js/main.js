@@ -56,7 +56,9 @@
   };
 
   var buttonPhotosCommentsNumber = document.querySelector('.img-filters').querySelector('#filter-discussed');
+  buttonPhotosCommentsNumber.classList.add('img-filters__button--active');
   var buttonPhotosRandom = document.querySelector('.img-filters').querySelector('#filter-random');
+  buttonPhotosRandom.classList.add('img-filters__button--active');
   var buttonPhotos = document.querySelector('.img-filters').querySelector('#filter-default');
   var clearingPhotos = function (picturesElement) {
     var elemLast = picturesElement.lastChild;
