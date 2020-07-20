@@ -67,4 +67,8 @@
     return Math.max(minValue, Math.min(maxValue, value));
   };
 
+  window.getRandomArrayElement = function (arr) {
+    return arr[window.generateRandomNumber(0, arr.length - 1)];
+  };
+
 }());
