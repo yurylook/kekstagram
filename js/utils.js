@@ -71,4 +71,14 @@
     return arr[window.generateRandomNumber(0, arr.length - 1)];
   };
 
+  window.getRandomUniqueElements = function (arr, count) {
+    var arrCopy = arr.slice();
+    var resultArr = [];
+    for (var i = 0; i < Math.min(count, arrCopy.length); i++) {
+      var randomIndex = window.generateRandomNumber(0, arrCopy.length - 1);
+      resultArr = resultArr.concat(arrCopy.splice(randomIndex, 1));
+    }
+    return resultArr;
+  };
+
 }());
