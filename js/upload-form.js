@@ -61,4 +61,4 @@
     document.addEventListener('keydown', onErrorMessageKeydown);
   };
 
-}());
+})();

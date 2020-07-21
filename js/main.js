@@ -6,16 +6,42 @@
   var uploadCancelElement = document.querySelector('#upload-cancel');
   var uploadFileElement = document.querySelector('#upload-file');
   var picturesElement = document.querySelector('.pictures');
-  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+  var filterDiscussedElement = document.querySelector('#filter-discussed');
+  var filterRandomElement = document.querySelector('#filter-random');
+  var filterDefaultElement = document.querySelector('#filter-default');
+
+  var inactivateFilterButtons = function () {
+    var buttons = document.querySelectorAll('.img-filters__button');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove('img-filters__button--active');
+    }
+  };
 
   window.loadData(function (photos) {
     for (var i = 0; i < photos.length; i++) {
       picturesElement.appendChild(window.generatePictureNode(photos[i], i));
     }
     window.showBigPictures(photos);
-    getPhotosServer(photos);
-    window.getRandomUniqueElements(photos, 10);
+
+    filterDiscussedElement.addEventListener('click', window.debounce(function () {
+      inactivateFilterButtons();
+      filterDiscussedElement.classList.add('img-filters__button--active');
+      renderPhotos(getPhotosSortedByNumberOfComments(photos));
+    }));
+
+    filterRandomElement.addEventListener('click', window.debounce(function () {
+      inactivateFilterButtons();
+      filterRandomElement.classList.add('img-filters__button--active');
+      renderPhotos(window.getRandomUniqueElements(photos, 10));
+    }));
+
+    filterDefaultElement.addEventListener('click', window.debounce(function () {
+      inactivateFilterButtons();
+      filterDefaultElement.classList.add('img-filters__button--active');
+      renderPhotos(photos);
+    }));
   });
+
   var onUploadOverlayKeydown = function (evt) {
     if (evt.key === 'Escape') {
       window.onUploadOverlayClose();
@@ -39,59 +65,26 @@
     document.addEventListener('keydown', onUploadOverlayKeydown);
   });
 
-  var photosCommentsNumber = [];
   var getPhotosSortedByNumberOfComments = function (photos) {
-    photosCommentsNumber = photos.slice();
-    photosCommentsNumber.sort(function (a, b) {
+    return photos.slice().sort(function (a, b) {
       return b.comments.length - a.comments.length;
     });
-    return photosCommentsNumber;
   };
 
-  var buttonPhotosCommentsNumber = document.querySelector('.img-filters').querySelector('#filter-discussed');
-  buttonPhotosCommentsNumber.classList.add('img-filters__button--active');
-  var buttonPhotosRandom = document.querySelector('.img-filters').querySelector('#filter-random');
-  buttonPhotosRandom.classList.add('img-filters__button--active');
-  var buttonPhotos = document.querySelector('.img-filters').querySelector('#filter-default');
-
-  var makeEmptyArrayOfPhotos = function (pistureChilds) {
-    var elemLast = pistureChilds.lastChild;
+  var clearPhotos = function () {
+    var elemLast = picturesElement.lastChild;
     while (elemLast.tagName === 'A') {
-      pistureChilds.removeChild(elemLast);
-      elemLast = pistureChilds.lastChild;
+      picturesElement.removeChild(elemLast);
+      elemLast = picturesElement.lastChild;
     }
   };
 
-  var loadDataPhotos = (function (photos) {
+  var renderPhotos = (function (photos) {
+    clearPhotos();
     for (var i = 0; i < photos.length; i++) {
       picturesElement.appendChild(window.generatePictureNode(photos[i], i));
     }
     window.showBigPictures(photos);
   });
 
-  var photosServer = [];
-  var getPhotosServer = function (photos) {
-    photosServer = photos.slice();
-    return photosServer;
-  };
-
-  var photosRandom = [];
-
-  buttonPhotosCommentsNumber.addEventListener('click', window.debounce(function () {
-    getPhotosSortedByNumberOfComments(photosServer);
-    makeEmptyArrayOfPhotos(picturesElement);
-    loadDataPhotos(photosCommentsNumber);
-  }));
-
-  buttonPhotosRandom.addEventListener('click', window.debounce(function () {
-    photosRandom = window.getRandomUniqueElements(photosServer, 10);
-    makeEmptyArrayOfPhotos(picturesElement);
-    loadDataPhotos(photosRandom);
-  }));
-
-  buttonPhotos.addEventListener('click', window.debounce(function () {
-    makeEmptyArrayOfPhotos(picturesElement);
-    loadDataPhotos(photosServer);
-  }));
-
-}());
+})();
