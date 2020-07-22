@@ -14,6 +14,7 @@
   var newUserComment = document.querySelector('.social__footer').querySelector('input');
   var textDescription = document.querySelector('.text__description');
   var socialComments = document.querySelector('.social__comments');
+  var moreSocialCommentsNumber = 5;
   var imageSettings = {
     scale: 100,
     effect: 'none',
@@ -93,18 +94,37 @@
     document.querySelector('.big-picture__img img').src = photo.url;
     document.querySelector('.likes-count').innerText = photo.likes;
     document.querySelector('.comments-count').innerText = photo.comments.length;
+    document.querySelector('.social__comments-loader').classList.remove('hidden');
     socialComments.innerHTML = '';
 
-    for (var i = 0; i < photo.comments.length; i++) {
-      var socialCommentElement = generateSocialCommentNode(photo.comments[i]);
-      socialComments.appendChild(socialCommentElement);
-    }
-
+    getUnreadSocialComments(photo);
     var bigPictureDescription = document.querySelector('.social__caption');
     bigPictureDescription.innerText = photo.description;
     document.querySelector('.social__comment-count').classList.add('hidden');
     bodyElement.classList.add('modal-open');
   };
+
+  var unreadSocialCommerts = [];
+  var getUnreadSocialComments = function (photo) {
+    unreadSocialCommerts = photo.comments.slice();
+    renderMoreSendComments();
+  };
+
+
+  var renderMoreSendComments = function () {
+    var numberOfUnreadComments = unreadSocialCommerts.length;
+    for (var i = 0; i < Math.min(numberOfUnreadComments, moreSocialCommentsNumber); i++) {
+      var socialCommentElement = generateSocialCommentNode(unreadSocialCommerts[0]);
+      socialComments.appendChild(socialCommentElement);
+      unreadSocialCommerts.shift();
+    }
+    if (unreadSocialCommerts.length === 0) {
+      document.querySelector('.social__comments-loader').classList.add('hidden');
+    }
+  };
+  document.querySelector('.social__comments-loader').addEventListener('click', function () {
+    renderMoreSendComments();
+  });
 
   var hideBigPicture = function () {
     document.querySelector('.big-picture').classList.add('hidden');
