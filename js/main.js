@@ -6,13 +6,40 @@
   var uploadCancelElement = document.querySelector('#upload-cancel');
   var uploadFileElement = document.querySelector('#upload-file');
   var picturesElement = document.querySelector('.pictures');
-  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+  var filterDiscussedElement = document.querySelector('#filter-discussed');
+  var filterRandomElement = document.querySelector('#filter-random');
+  var filterDefaultElement = document.querySelector('#filter-default');
+
+  var inactivateFilterButtons = function () {
+    var buttons = document.querySelectorAll('.img-filters__button');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove('img-filters__button--active');
+    }
+  };
 
   window.loadData(function (photos) {
     for (var i = 0; i < photos.length; i++) {
       picturesElement.appendChild(window.generatePictureNode(photos[i], i));
     }
     window.showBigPictures(photos);
+
+    filterDiscussedElement.addEventListener('click', window.debounce(function () {
+      inactivateFilterButtons();
+      filterDiscussedElement.classList.add('img-filters__button--active');
+      renderPhotos(getPhotosSortedByNumberOfComments(photos));
+    }));
+
+    filterRandomElement.addEventListener('click', window.debounce(function () {
+      inactivateFilterButtons();
+      filterRandomElement.classList.add('img-filters__button--active');
+      renderPhotos(window.getRandomUniqueElements(photos, 10));
+    }));
+
+    filterDefaultElement.addEventListener('click', window.debounce(function () {
+      inactivateFilterButtons();
+      filterDefaultElement.classList.add('img-filters__button--active');
+      renderPhotos(photos);
+    }));
   });
 
   var onUploadOverlayKeydown = function (evt) {
@@ -38,4 +65,26 @@
     document.addEventListener('keydown', onUploadOverlayKeydown);
   });
 
-}());
+  var getPhotosSortedByNumberOfComments = function (photos) {
+    return photos.slice().sort(function (a, b) {
+      return b.comments.length - a.comments.length;
+    });
+  };
+
+  var clearPhotos = function () {
+    var elemLast = picturesElement.lastChild;
+    while (elemLast.tagName === 'A') {
+      picturesElement.removeChild(elemLast);
+      elemLast = picturesElement.lastChild;
+    }
+  };
+
+  var renderPhotos = (function (photos) {
+    clearPhotos();
+    for (var i = 0; i < photos.length; i++) {
+      picturesElement.appendChild(window.generatePictureNode(photos[i], i));
+    }
+    window.showBigPictures(photos);
+  });
+
+})();
