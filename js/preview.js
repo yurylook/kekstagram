@@ -12,9 +12,11 @@
   var effectLevel = document.querySelector('.img-upload__effect-level');
   var hashtag = document.querySelector('.text__hashtags');
   var newUserComment = document.querySelector('.social__footer').querySelector('input');
+  var bigPictureDescription = document.querySelector('.social__caption');
   var textDescription = document.querySelector('.text__description');
   var socialComments = document.querySelector('.social__comments');
-  var moreSocialCommentsNumber = 5;
+  var MORE_SOCIAL_COMMENTS_NUMBER = 5;
+  var unreadSocialCommerts = [];
   var imageSettings = {
     scale: 100,
     effect: 'none',
@@ -96,24 +98,16 @@
     document.querySelector('.comments-count').innerText = photo.comments.length;
     document.querySelector('.social__comments-loader').classList.remove('hidden');
     socialComments.innerHTML = '';
-
-    getUnreadSocialComments(photo);
-    var bigPictureDescription = document.querySelector('.social__caption');
     bigPictureDescription.innerText = photo.description;
     document.querySelector('.social__comment-count').classList.add('hidden');
     bodyElement.classList.add('modal-open');
-  };
-
-  var unreadSocialCommerts = [];
-  var getUnreadSocialComments = function (photo) {
     unreadSocialCommerts = photo.comments.slice();
     renderMoreSendComments();
   };
 
-
   var renderMoreSendComments = function () {
     var numberOfUnreadComments = unreadSocialCommerts.length;
-    for (var i = 0; i < Math.min(numberOfUnreadComments, moreSocialCommentsNumber); i++) {
+    for (var i = 0; i < Math.min(numberOfUnreadComments, MORE_SOCIAL_COMMENTS_NUMBER); i++) {
       var socialCommentElement = generateSocialCommentNode(unreadSocialCommerts[0]);
       socialComments.appendChild(socialCommentElement);
       unreadSocialCommerts.shift();
