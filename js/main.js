@@ -9,11 +9,11 @@
   var filterDiscussedElement = document.querySelector('#filter-discussed');
   var filterRandomElement = document.querySelector('#filter-random');
   var filterDefaultElement = document.querySelector('#filter-default');
+  var filterButtonElements = document.querySelectorAll('.img-filters__button');
 
   var inactivateFilterButtons = function () {
-    var buttons = document.querySelectorAll('.img-filters__button');
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].classList.remove('img-filters__button--active');
+    for (var i = 0; i < filterButtonElements.length; i++) {
+      filterButtonElements[i].classList.remove('img-filters__button--active');
     }
   };
 
@@ -88,3 +88,4 @@
   });
 
 })();
+
