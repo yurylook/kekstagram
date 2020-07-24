@@ -2,9 +2,11 @@
 
 (function () {
 
-  var form = document.querySelector('.img-upload__form');
-  form.addEventListener('submit', function (evt) {
-    window.sendData(new FormData(form), function () {
+  var formElement = document.querySelector('.img-upload__form');
+  var mainElement = document.querySelector('main');
+
+  formElement.addEventListener('submit', function (evt) {
+    window.sendData(new FormData(formElement), function () {
       window.onUploadOverlayClose();
       window.openSuccessMessage();
     }, function () {
@@ -15,10 +17,8 @@
     evt.preventDefault();
   });
 
-  var mainElement = document.querySelector('main');
-
   window.openSuccessMessage = function () {
-    mainElement.appendChild(window.generateSuccessSend());
+    mainElement.appendChild(window.generateSuccessSendNode());
 
     var onCloseSuccessMessage = function () {
       mainElement.querySelector('.success').remove();
@@ -40,7 +40,7 @@
   };
 
   window.openErrorMessage = function () {
-    mainElement.appendChild(window.generateErrorSend());
+    mainElement.appendChild(window.generateErrorSendNode());
 
     var onCloseErrorMessage = function () {
       mainElement.querySelector('.error').remove();

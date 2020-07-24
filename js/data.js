@@ -18,18 +18,28 @@
     return pictureElement;
   };
 
-  window.generateErrorSend = function () {
+  window.generateErrorSendNode = function () {
     var template = document.querySelector('#error').content
      .querySelector('section');
     var errorSend = template.cloneNode(true);
     return errorSend;
   };
 
-  window.generateSuccessSend = function () {
+  window.generateSuccessSendNode = function () {
     var template = document.querySelector('#success').content
      .querySelector('section');
     var successSend = template.cloneNode(true);
     return successSend;
+  };
+
+  window.generateSocialCommentNode = function (comment) {
+    var template = document.querySelector('#social_comment_template').content;
+    var socialCommentElement = template.cloneNode(true);
+    var socialCommentImageElement = socialCommentElement.querySelector('img');
+    socialCommentImageElement.src = comment.avatar;
+    socialCommentImageElement.alt = comment.name;
+    socialCommentElement.querySelector('.social__text').innerText = comment.message;
+    return socialCommentElement;
   };
 
 })();
