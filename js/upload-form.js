@@ -22,13 +22,11 @@
 
     var onCloseSuccessMessage = function () {
       mainElement.querySelector('.success').remove();
-      document.removeEventListener('click', onCloseSuccessMessage);
+      mainElement.removeEventListener('click', onCloseSuccessMessage);
       document.removeEventListener('keydown', onSuccessMessageKeydown);
     };
 
-    document.addEventListener('click', function () {
-      onCloseSuccessMessage();
-    });
+    mainElement.addEventListener('click', onCloseSuccessMessage);
 
     var onSuccessMessageKeydown = function (evt) {
       if (evt.key === 'Escape') {
@@ -44,13 +42,11 @@
 
     var onCloseErrorMessage = function () {
       mainElement.querySelector('.error').remove();
-      document.removeEventListener('click', onCloseErrorMessage);
+      mainElement.removeEventListener('click', onCloseErrorMessage);
       document.removeEventListener('keydown', onErrorMessageKeydown);
     };
 
-    document.addEventListener('click', function () {
-      onCloseErrorMessage();
-    });
+    mainElement.addEventListener('click', onCloseErrorMessage);
 
     var onErrorMessageKeydown = function (evt) {
       if (evt.key === 'Escape') {

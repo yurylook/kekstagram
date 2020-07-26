@@ -78,6 +78,8 @@
   document.querySelector('.img-upload__effects').addEventListener('change', function () {
     imageSettings.effect = getCheckedEffect();
     imageSettings.percentage = 1;
+    effectLevelPinElement.style.left = effectLevelLineElement.offsetWidth + 'px';
+    effectLevelDepthElement.style.width = (effectLevelPinElement.offsetLeft / effectLevelLineElement.offsetWidth * 100) + '%';
     window.applyImageSettings();
   });
 
