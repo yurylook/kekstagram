@@ -2,6 +2,7 @@
 
 (function () {
   var MORE_SOCIAL_COMMENTS_NUMBER = 5;
+  var MAX_EFFECT_LEVEL_PIN_ELEMENT_OFFSET_LEFT = 453;
   var effectLevelPinElement = document.querySelector('.effect-level__pin');
   var effectLevelDepthElement = document.querySelector('.effect-level__depth');
   var effectLevelLineElement = document.querySelector('.effect-level__line');
@@ -16,7 +17,7 @@
   var bigPictureDescriptionElement = document.querySelector('.social__caption');
   var textDescriptionElement = document.querySelector('.text__description');
   var socialCommentsElement = document.querySelector('.social__comments');
-  var unreadSocialCommerts = [];
+  var unreadSocialComments = [];
   var imageSettings = {
     scale: 100,
     effect: 'none',
@@ -45,6 +46,7 @@
     scaleControlValueElement.value = imageSettings.scale + '%';
 
     if (imageSettings.effect === 'none') {
+
       effectLevelElement.classList.add('hidden');
     } else {
       effectLevelElement.classList.remove('hidden');
@@ -78,8 +80,8 @@
   document.querySelector('.img-upload__effects').addEventListener('change', function () {
     imageSettings.effect = getCheckedEffect();
     imageSettings.percentage = 1;
-    effectLevelPinElement.style.left = effectLevelLineElement.offsetWidth + 'px';
-    effectLevelDepthElement.style.width = (effectLevelPinElement.offsetLeft / effectLevelLineElement.offsetWidth * 100) + '%';
+    effectLevelDepthElement.style.width = 100 + '%';
+    effectLevelPinElement.style.left = MAX_EFFECT_LEVEL_PIN_ELEMENT_OFFSET_LEFT + 'px';
     window.applyImageSettings();
   });
 
@@ -93,18 +95,18 @@
     bigPictureDescriptionElement.innerText = photo.description;
     document.querySelector('.social__comment-count').classList.add('hidden');
     bodyElement.classList.add('modal-open');
-    unreadSocialCommerts = photo.comments.slice();
+    unreadSocialComments = photo.comments.slice();
     renderMoreSendComments();
   };
 
   var renderMoreSendComments = function () {
-    var numberOfUnreadComments = unreadSocialCommerts.length;
+    var numberOfUnreadComments = unreadSocialComments.length;
     for (var i = 0; i < Math.min(numberOfUnreadComments, MORE_SOCIAL_COMMENTS_NUMBER); i++) {
-      var socialCommentElement = window.generateSocialCommentNode(unreadSocialCommerts[0]);
+      var socialCommentElement = window.generateSocialCommentNode(unreadSocialComments[0]);
       socialCommentsElement.appendChild(socialCommentElement);
-      unreadSocialCommerts.shift();
+      unreadSocialComments.shift();
     }
-    if (unreadSocialCommerts.length === 0) {
+    if (unreadSocialComments.length === 0) {
       document.querySelector('.social__comments-loader').classList.add('hidden');
     }
   };
