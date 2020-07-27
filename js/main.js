@@ -23,11 +23,14 @@
     }
     window.showBigPictures(photos);
 
-    filterDiscussedElement.addEventListener('click', window.debounce(function () {
+    var createDiscussedArray = function () {
       inactivateFilterButtons();
       filterDiscussedElement.classList.add('img-filters__button--active');
       renderPhotos(getPhotosSortedByNumberOfComments(photos));
-    }));
+      filterDiscussedElement.removeEventListener('click', createDiscussedArray);
+    };
+    // filterDiscussedElement.addEventListener('click', window.debounce(function () {
+    filterDiscussedElement.addEventListener('click', createDiscussedArray);
 
     filterRandomElement.addEventListener('click', window.debounce(function () {
       inactivateFilterButtons();

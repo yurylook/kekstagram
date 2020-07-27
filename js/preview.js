@@ -117,11 +117,11 @@
   var hideBigPicture = function () {
     document.querySelector('.big-picture').classList.add('hidden');
     bodyElement.classList.remove('modal-open');
+    document.querySelector('#picture-cancel').removeEventListener('click', hideBigPicture);
+
   };
 
-  document.querySelector('#picture-cancel').addEventListener('click', function () {
-    hideBigPicture();
-  });
+  document.querySelector('#picture-cancel').addEventListener('click', hideBigPicture);
 
   var hideBigPictureKey = function (evt) {
     if (evt.key === 'Escape') {
