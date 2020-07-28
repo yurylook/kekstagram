@@ -67,7 +67,6 @@
   };
   buttonControlSmallerElement.addEventListener('click', onClickControlSmallerElement);
 
-  // buttonControlBiggerElement.addEventListener('click', function () {
   var onClickControlBiggerElement = function () {
     imageSettings.scale = window.clip(imageSettings.scale + 25, 25, 100);
     window.applyImageSettings();
