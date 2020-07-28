@@ -114,31 +114,57 @@
     renderMoreSendComments();
   });
 
-  var hideBigPicture = function () {
-    document.querySelector('.big-picture').classList.add('hidden');
-    bodyElement.classList.remove('modal-open');
-    document.querySelector('#picture-cancel').removeEventListener('click', hideBigPicture);
 
-  };
+  // var hideBigPicture = function () {
+  // document.querySelector('.big-picture').classList.add('hidden');
+  // bodyElement.classList.remove('modal-open');
+  // document.querySelector('#picture-cancel').removeEventListener('click', hideBigPicture);
+  // document.querySelector('.pictures').addEventListener('click', er);
+  // };
 
-  document.querySelector('#picture-cancel').addEventListener('click', hideBigPicture);
+  //  document.querySelector('#picture-cancel').addEventListener('click', hideBigPicture);
 
-  var hideBigPictureKey = function (evt) {
-    if (evt.key === 'Escape') {
-      hideBigPicture();
-    }
-  };
-  document.addEventListener('keydown', hideBigPictureKey);
+  //  var hideBigPictureKey = function (evt) {
+  //  if (evt.key === 'Escape') {
+  //  hideBigPicture();
+  // }
+  // };
+  // document.addEventListener('keydown', hideBigPictureKey);
 
   window.showBigPictures = function (photos) {
-    document.querySelector('.pictures').addEventListener('click', function (evt) {
+    var er = function (evt) {
       var dataId = evt.target.getAttribute('data-id');
       if (dataId === null || dataId === '') {
         return;
       }
       var index = +dataId;
       showBigPicture(photos[index]);
-    });
+    };
+    document.querySelector('.pictures').addEventListener('click', er);
+    var hideBigPicture = function () {
+      document.querySelector('.big-picture').classList.add('hidden');
+      bodyElement.classList.remove('modal-open');
+      // document.querySelector('#picture-cancel').removeEventListener('click', hideBigPicture);
+      document.querySelector('.pictures').removeEventListener('click', er);
+    };
+
+    //  document.querySelector('.pictures').addEventListener('click', er);
+    document.querySelector('#picture-cancel').addEventListener('click', hideBigPicture);
+
+    var hideBigPictureKey = function (evt) {
+      if (evt.key === 'Escape') {
+        hideBigPicture();
+      }
+    };
+    document.addEventListener('keydown', hideBigPictureKey);
+    //  var dataId = evt.target.getAttribute('data-id');
+    // if (dataId === null || dataId === '') {
+    // return;
+    // }
+    // var index = +dataId;
+    // showBigPicture(photos[index]);
+    // });
+
 
     document.addEventListener('keydown', function (evt) {
       if (evt.key !== 'Enter') {
